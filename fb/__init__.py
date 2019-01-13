@@ -5,7 +5,7 @@ from settings import FB_PAGE_ACCESS_TOKEN
 
 
 def post_facebook_message(fbid, received_message):
-    post_message_url = f'https://graph.facebook.com/v2.6/me/messages?' \
+    post_message_url = f'https://graph.facebook.com/v3.1/me/messages?' \
         f'access_token={FB_PAGE_ACCESS_TOKEN}'
     response_msg = json.dumps({
         "recipient": {"id": fbid},
