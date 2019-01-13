@@ -1,5 +1,3 @@
-# verify token:
-# c1215981fdbf49949a578b41d0235204
 import json
 from pprint import pprint
 
