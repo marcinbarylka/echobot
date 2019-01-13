@@ -1,27 +1,12 @@
 import json
 from pprint import pprint
 
-import requests
 from flask import Flask, request
 
-from local_settings import FB_PAGE_ACCESS_TOKEN, FB_VERIFY_TOKEN
+from fb import post_facebook_message
+from settings.fb_local_settings import FB_VERIFY_TOKEN
 
 app = Flask(__name__)
-
-
-def post_facebook_message(fbid, received_message):
-    post_message_url = f'https://graph.facebook.com/v2.6/me/messages?' \
-        f'access_token={FB_PAGE_ACCESS_TOKEN}'
-    response_msg = json.dumps({
-        "recipient": {"id": fbid},
-        "message": {
-            "text": f"Chyba twoja stara {received_message}"
-        }
-    })
-    status = requests.post(post_message_url,
-                           headers={"Content-Type": "application/json"},
-                           data=response_msg)
-    return status
 
 
 @app.route("/bot/d9417da2cbc8499f82db7649685133d8", methods=["GET"])
