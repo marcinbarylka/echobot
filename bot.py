@@ -24,8 +24,12 @@ def web_hook():
         for message in entry['messaging']:
             if 'message' in message:
                 pprint(message)
-                post_facebook_message(message['sender']['id'],
-                                      message['message']['text'])
+                if 'text' in message['message']:
+                    post_facebook_message(message['sender']['id'],
+                                          message['message']['text'])
+                else:
+                    post_facebook_message(message['sender']['id'],
+                                          "obrazki")
     return ""
 
 
