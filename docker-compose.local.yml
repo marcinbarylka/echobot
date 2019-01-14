@@ -1,12 +1,27 @@
-"version": 3
+"version": "3"
 services:
   nginx:
     image: nginx:stable
-    container_name: production_nginx
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./web/logs/nginx/:/var/log/nginx
       - ./web:/usr/share/nginx/html
+      - ./docker/web/local.template:/etc/nginx/conf.d/mysite.template
     ports:
       - 80:80
-      - 443:443
+    depends_on:
+      - python
+#    networks:
+#      default:
+#        - ipv4_address: 172.17.128.100
+    environment:
+      NGINX_HOST: localhost
+      NGINX_PORT: 80
+    command: /bin/bash -c "envsubst '$${NGINX_HOST},$${NGINX_PORT}' < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    links:
+      - python
+
+  python:
+    build: docker/python
+    restart: always
+    command: bash -c "gunicorn survey.wsgi -b 0.0.0.0:5000 --reload"
+    expose:
+      - "5000"
