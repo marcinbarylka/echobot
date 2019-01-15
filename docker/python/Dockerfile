@@ -8,6 +8,6 @@ RUN apt-get update --fix-missing
 RUN apt-get upgrade -y
 ENV PYTHONBUFFERED 1
 RUN pip install pipenv
-RUN pipenv install
+RUN pipenv install --system --deploy
 RUN pipenv install gunicorn flake8
 USER unicorn

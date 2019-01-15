@@ -22,6 +22,8 @@ services:
   python:
     build: docker/python
     restart: always
+    volumes:
+        - ./:/usr/src/app
     command: bash -c "gunicorn survey.wsgi -b 0.0.0.0:5000 --reload"
     expose:
       - "5000"
