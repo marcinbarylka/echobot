@@ -24,6 +24,6 @@ services:
     restart: always
     volumes:
         - ./:/usr/src/app
-    command: bash -c "gunicorn survey.wsgi -b 0.0.0.0:5000 --reload"
+    command: pipenv run python bot.py --system --deploy --ignore-pipfile
     expose:
       - "5000"
